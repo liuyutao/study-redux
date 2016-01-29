@@ -13,10 +13,10 @@ import AddTodo from '../components/AddTodo'
 import TodoList from '../components/TodoList'
 import Footer from '../components/Footer'
 
-class App extends Component{
-	render(){
+class App extends Component {
+	render() {
 		// Injected by connect() call:
-		const {dispatch,visibilityTodos,visibilityFilter} = this.props
+		const {dispatch,visibleTodos,visibilityFilter} = this.props
 		return (
 			<div>
 				<AddTodo
@@ -26,27 +26,27 @@ class App extends Component{
 				/>
 				<TodoList
 					todos={visibleTodos}
-				    onTodoClick={index=>
+					onTodoClick={(index)=>
 				        dispatch(completeTodo(index))
 				    }
 				/>
 
 				<Footer
 					filter={visibilityFilter}
-				    onFilterChange={nextFilter=>
+					onFilterChange={nextFilter=>
 				        dispatch(setVisibilityFilter(nextFilter))
-				    } />
+				    }/>
 			</div>
 		)
 	}
 }
 
-App.propTypes={
-	VisibleTodos:PropTypes.arrayOf(PropTypes.shape({
-		text:PropTypes.string.isRequired,
-		completed:PropTypes.bool.isRequired
+App.propTypes = {
+	visibleTodos: PropTypes.arrayOf(PropTypes.shape({
+		text: PropTypes.string.isRequired,
+		completed: PropTypes.bool.isRequired
 	}).isRequired).isRequired,
-	VisibilityFilter:PropTypes.oneOf([
+	visibilityFilter: PropTypes.oneOf([
 		'SHOW_ALL',
 		'SHOW_COMPLETED',
 		'SHOW_ACTIVE'
@@ -54,8 +54,8 @@ App.propTypes={
 }
 
 
-function selectTodos(todos,filter) {
-	switch(filter){
+function selectTodos(todos, filter) {
+	switch (filter) {
 		case VisibilityFilters.SHOW_ALL:
 			return todos
 		case VisibilityFilters.SHOW_COMPLETED:
@@ -67,8 +67,8 @@ function selectTodos(todos,filter) {
 
 function select(state) {
 	return {
-		visibleTodos:selectTodos(state.todos,state.visibilityFilter),
-		visibilityFilter:state.visibilityFilter
+		visibleTodos: selectTodos(state.todos, state.visibilityFilter),
+		visibilityFilter: state.visibilityFilter
 	}
 }
 
